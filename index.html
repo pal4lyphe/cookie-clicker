@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Clicker Lite</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      margin: 10px;
+      width: 80%;
+      max-width: 300px;
+      border-radius: 10px;
+      border: none;
+      background: #ffcc00;
+      color: #333;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 22px;
+    }
+
+    .upgrade {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🍪 Cookie Clicker Lite</h1>
+  <h2 id="cookie-count">Cookies: 0</h2>
+
+  <button onclick="earnCookies()">Click Me!</button>
+
+  <div class="upgrade">
+    <button onclick="buyUpgrade()">Buy Upgrade (Cost: <span id="upgrade-cost">10</span>)</button>
+    <p>Cookies per click: <span id="cookies-per-click">1</span></p>
+  </div>
+
+  <script>
+    let cookies = 0;
+    let cookiesPerClick = 1;
+    let upgradeCost = 10;
+
+    function earnCookies() {
+      cookies += cookiesPerClick;
+      updateDisplay();
+    }
+
+    function buyUpgrade() {
+      if (cookies >= upgradeCost) {
+        cookies -= upgradeCost;
+        cookiesPerClick += 1;
+        upgradeCost = Math.floor(upgradeCost * 1.5);
+        updateDisplay();
+      }
+    }
+
+    function updateDisplay() {
+      document.getElementById('cookie-count').textContent = `Cookies: ${cookies}`;
+      document.getElementById('cookies-per-click').textContent = cookiesPerClick;
+      document.getElementById('upgrade-cost').textContent = upgradeCost;
+    }
+  </script>
+
+</body>
+</html>
