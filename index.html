@@ -1,82 +1,74 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cookie Clicker Lite</title>
+  <title>Cookie Clicker</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      margin: 0;
-      padding: 20px;
-      background: #f9f9f9;
     }
-
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      margin: 10px;
-      width: 80%;
-      max-width: 300px;
-      border-radius: 10px;
-      border: none;
-      background: #ffcc00;
-      color: #333;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    #cookie {
+      cursor: pointer;
+      width: 200px;
+      height: 200px;
+      background-image: url('cookie.png');
+      background-size: cover;
     }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-size: 22px;
-    }
-
-    .upgrade {
+    #upgradeButton {
       margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <h1>🍪 Cookie Clicker Lite</h1>
-  <h2 id="cookie-count">Cookies: 0</h2>
+  <!-- Audio elements for sound effects -->
+  <audio id="click-sound" src="click-sound.wav" preload="auto"></audio>
+  <audio id="upgrade-sound" src="upgrade-sound.wav" preload="auto"></audio>
 
-  <button onclick="earnCookies()">Click Me!</button>
+  <h1>Cookie Clicker</h1>
 
-  <div class="upgrade">
-    <button onclick="buyUpgrade()">Buy Upgrade (Cost: <span id="upgrade-cost">10</span>)</button>
-    <p>Cookies per click: <span id="cookies-per-click">1</span></p>
+  <div id="cookie">
+    <!-- Cookie image that will be clicked -->
   </div>
 
+  <button id="upgradeButton">Upgrade</button>
+
+  <div id="cookieCount">Cookies: 0</div>
+
   <script>
+    // Get sound elements
+    const clickSound = document.getElementById('click-sound');
+    const upgradeSound = document.getElementById('upgrade-sound');
+
+    // Variables for the game
     let cookies = 0;
-    let cookiesPerClick = 1;
-    let upgradeCost = 10;
 
-    function earnCookies() {
-      cookies += cookiesPerClick;
-      updateDisplay();
-    }
+    // Play the click sound when the cookie is clicked
+    const cookie = document.getElementById('cookie');
+    cookie.addEventListener('click', function() {
+      clickSound.play();
+      cookies++;
+      document.getElementById('cookieCount').innerText = "Cookies: " + cookies;
+    });
 
-    function buyUpgrade() {
-      if (cookies >= upgradeCost) {
-        cookies -= upgradeCost;
-        cookiesPerClick += 1;
-        upgradeCost = Math.floor(upgradeCost * 1.5);
-        updateDisplay();
+    // Play the upgrade sound when an upgrade is purchased
+    const upgradeButton = document.getElementById('upgradeButton');
+    upgradeButton.addEventListener('click', function() {
+      if (cookies >= 10) { // Ensure the player has enough cookies for the upgrade
+        cookies -= 10;
+        document.getElementById('cookieCount').innerText = "Cookies: " + cookies;
+        upgradeSound.play();
+        // Add upgrade functionality (e.g., cookie multiplier) here
+        alert("Upgrade Purchased!");
+      } else {
+        alert("Not enough cookies for upgrade!");
       }
-    }
-
-    function updateDisplay() {
-      document.getElementById('cookie-count').textContent = `Cookies: ${cookies}`;
-      document.getElementById('cookies-per-click').textContent = cookiesPerClick;
-      document.getElementById('upgrade-cost').textContent = upgradeCost;
-    }
+    });
   </script>
 
 </body>
