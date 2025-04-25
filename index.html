@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,12 +38,19 @@
     .upgrade {
       margin-top: 20px;
     }
+
+    #total-cookies {
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
   <h1>🍪 Cookie Clicker Lite</h1>
   <h2 id="cookie-count">Cookies: 0</h2>
+  <h2 id="total-cookies">Total Cookies: 0</h2>
 
   <button onclick="earnCookies()">Click Me!</button>
 
@@ -55,14 +61,18 @@
 
   <script>
     let cookies = 0;
+    let totalCookies = 0;  // Variable to track the total cookies clicked
     let cookiesPerClick = 1;
     let upgradeCost = 10;
 
+    // Function to earn cookies on each click
     function earnCookies() {
       cookies += cookiesPerClick;
+      totalCookies++;  // Increment total cookies on each click
       updateDisplay();
     }
 
+    // Function to buy an upgrade
     function buyUpgrade() {
       if (cookies >= upgradeCost) {
         cookies -= upgradeCost;
@@ -72,8 +82,10 @@
       }
     }
 
+    // Function to update the display
     function updateDisplay() {
       document.getElementById('cookie-count').textContent = `Cookies: ${cookies}`;
+      document.getElementById('total-cookies').textContent = `Total Cookies: ${totalCookies}`;
       document.getElementById('cookies-per-click').textContent = cookiesPerClick;
       document.getElementById('upgrade-cost').textContent = upgradeCost;
     }
