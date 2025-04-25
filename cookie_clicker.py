@@ -1,51 +1,45 @@
+from flask import Flask, render_template, redirect, url_for
 import time
+
+app = Flask(__name__)
 
 class CookieClicker:
     def __init__(self):
         self.cookies = 0
-        self.cps = 0  # Cookies per second
+        self.cps = 0
         self.upgrades = 0
-        self.is_playing = True
 
     def click(self):
-        """Simulate a click event to increase cookies."""
         self.cookies += 1
-        print(f"You clicked! Total cookies: {self.cookies}")
 
     def buy_upgrade(self):
-        """Buy an upgrade if cookies are enough."""
         upgrade_cost = 10 * (self.upgrades + 1)
         if self.cookies >= upgrade_cost:
             self.cookies -= upgrade_cost
             self.upgrades += 1
             self.cps += 1
-            print(f"Upgrade purchased! Cookies per second increased to {self.cps}")
-        else:
-            print("Not enough cookies for an upgrade!")
 
-    def run(self):
-        """Start the main game loop."""
-        while self.is_playing:
-            print(f"\nTotal cookies: {self.cookies} | Cookies per second: {self.cps} | Upgrades: {self.upgrades}")
-            print("1. Click (Earn 1 cookie)")
-            print("2. Buy Upgrade (Increase CPS)")
-            print("3. Exit Game")
-            choice = input("Choose an action: ")
+    def auto_collect(self):
+        self.cookies += self.cps
 
-            if choice == "1":
-                self.click()
-            elif choice == "2":
-                self.buy_upgrade()
-            elif choice == "3":
-                print("Exiting game...")
-                self.is_playing = False
-            else:
-                print("Invalid choice! Please choose again.")
+# Initialize the game object
+game = CookieClicker()
 
-            # Simulate the passage of time for cookies to accumulate
-            time.sleep(1)
-            self.cookies += self.cps  # Add cookies based on CPS
+@app.route('/')
+def index():
+    return render_template('index.html', cookies=game.cookies, cps=game.cps, upgrades=game.upgrades)
+
+@app.route('/click')
+def click():
+    game.click()
+    game.auto_collect()
+    return redirect(url_for('index'))
+
+@app.route('/buy_upgrade')
+def buy_upgrade():
+    game.buy_upgrade()
+    game.auto_collect()
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
-    game = CookieClicker()
-    game.run()
+    app.run(debug=True)
