@@ -31,8 +31,9 @@
       margin-bottom: 10px;
     }
 
-    h2 {
+    h2, h3 {
       font-size: 22px;
+      margin: 5px 0;
     }
 
     .upgrade {
@@ -44,6 +45,7 @@
 
   <h1>🍪 Cookie Clicker Lite</h1>
   <h2 id="cookie-count">Cookies: 0</h2>
+  <h3 id="total-cookie-count">Total Cookies: 0</h3>
 
   <button onclick="earnCookies()">Click Me!</button>
 
@@ -58,6 +60,7 @@
 
   <script>
     let cookies = 0;
+    let totalCookies = 0;
     let cookiesPerClick = 1;
     let upgradeCost = 10;
 
@@ -66,6 +69,7 @@
 
     function earnCookies() {
       cookies += cookiesPerClick;
+      totalCookies = totalCookies + cookiesPerClick;
       clickSound.currentTime = 0;
       clickSound.play();
       updateDisplay();
@@ -84,6 +88,7 @@
 
     function updateDisplay() {
       document.getElementById('cookie-count').textContent = `Cookies: ${cookies}`;
+      document.getElementById('total-cookie-count').textContent = `Total Cookies: ${totalCookies}`;
       document.getElementById('cookies-per-click').textContent = cookiesPerClick;
       document.getElementById('upgrade-cost').textContent = upgradeCost;
     }
