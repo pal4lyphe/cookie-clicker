@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cookie Clicker Lite</title>
+  <title>Cookie Clicker</title>
   <style>
     body {
       font-family: sans-serif;
@@ -50,7 +50,7 @@
   <button onclick="earnCookies()">Click Me!</button>
 
   <div class="upgrade">
-    <button onclick="buyUpgrade()">Buy Upgrade (Cost: <span id="upgrade-cost">10</span>)</button>
+    <button onclick="buyUpgrade()">Buy Upgrade (Cost: <span id="upgrade-cost">5</span>)</button>
     <p>Cookies per click: <span id="cookies-per-click">1</span></p>
   </div>
 
@@ -62,7 +62,7 @@
     let cookies = 0;
     let totalCookies = 0;
     let cookiesPerClick = 1;
-    let upgradeCost = 10;
+    let upgradeCost = 5;
 
     const clickSound = document.getElementById("click-sound");
     const upgradeSound = document.getElementById("upgrade-sound");
